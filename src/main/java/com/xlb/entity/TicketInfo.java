@@ -9,8 +9,7 @@ import java.io.Serializable;
  * @author makejava
  * @since 2024-09-10 21:40:12
  */
-public class TicketInfo implements Serializable {
-    private static final long serialVersionUID = 323640221202312061L;
+public class TicketInfo {
     /**
      * 主键
      */

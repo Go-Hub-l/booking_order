@@ -12,9 +12,7 @@ import java.io.Serializable;
  * @since 2024-09-10 21:48:47
  */
 @Data
-public class StationInfo implements Serializable {
-    private static final long serialVersionUID = 967081718645585721L;
-    
+public class StationInfo {
     private Integer tid;
     /**
      * 车站名

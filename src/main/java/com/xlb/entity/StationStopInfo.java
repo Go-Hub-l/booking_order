@@ -12,8 +12,7 @@ import java.io.Serializable;
  * @since 2024-09-11 10:50:08
  */
 @Data
-public class StationStopInfo implements Serializable {
-    private static final long serialVersionUID = 871171064840908384L;
+public class StationStopInfo {
     /**
      * 主键
      */
