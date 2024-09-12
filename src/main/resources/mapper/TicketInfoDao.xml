@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xlb.dao.TicketInfoDao">
+
+    <resultMap type="com.xlb.entity.TicketInfo" id="TicketInfoMap">
+        <result property="tid" column="tid" jdbcType="INTEGER"/>
+        <result property="trainNumberCode" column="train_number_code" jdbcType="VARCHAR"/>
+        <result property="trainNumber" column="train_number" jdbcType="VARCHAR"/>
+        <result property="startStationCode" column="start_station_code" jdbcType="VARCHAR"/>
+        <result property="endStationCode" column="end_station_code" jdbcType="VARCHAR"/>
+        <result property="departStationCode" column="depart_station_code" jdbcType="VARCHAR"/>
+        <result property="arriveStationCode" column="arrive_station_code" jdbcType="VARCHAR"/>
+        <result property="departTime" column="depart_time" jdbcType="VARCHAR"/>
+        <result property="arriveTime" column="arrive_time" jdbcType="VARCHAR"/>
+        <result property="spendTime" column="spend_time" jdbcType="VARCHAR"/>
+        <result property="softSeatLeft" column="soft_seat_left" jdbcType="INTEGER"/>
+        <result property="noSeatLeft" column="no_seat_left" jdbcType="INTEGER"/>
+        <result property="hardBedLeft" column="hard_bed_left" jdbcType="INTEGER"/>
+        <result property="hardSeatLeft" column="hard_seat_left" jdbcType="INTEGER"/>
+        <result property="secondSeatLeft" column="second_seat_left" jdbcType="INTEGER"/>
+        <result property="firstSeatLeft" column="first_seat_left" jdbcType="INTEGER"/>
+        <result property="businessSeatLeft" column="business_seat_left" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="datachangeTime" column="datachange_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="TicketInfoMap">
+        select
+          tid, train_number_code, train_number, start_station_code, end_station_code, depart_station_code, arrive_station_code, depart_time, arrive_time, spend_time, soft_seat_left, no_seat_left, hard_bed_left, hard_seat_left, second_seat_left, first_seat_left, business_seat_left, create_time, datachange_time
+        from ticket_info
+        where tid = #{tid}
+    </select>
+
+    <select id="queryByTrainNumber" resultMap="TicketInfoMap">
+        select
+            tid, train_number_code, train_number, start_station_code, end_station_code, depart_station_code, arrive_station_code, depart_time, arrive_time, spend_time, soft_seat_left, no_seat_left, hard_bed_left, hard_seat_left, second_seat_left, first_seat_left, business_seat_left, create_time, datachange_time
+        from ticket_info
+        where train_number = #{trainNumber}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="TicketInfoMap">
+        select
+          tid, train_number_code, train_number, start_station_code, end_station_code, depart_station_code, arrive_station_code, depart_time, arrive_time, spend_time, soft_seat_left, no_seat_left, hard_bed_left, hard_seat_left, second_seat_left, first_seat_left, business_seat_left, create_time, datachange_time
+        from ticket_info
+        <where>
+            <if test="tid != null">
+                and tid = #{tid}
+            </if>
+            <if test="trainNumberCode != null and trainNumberCode != ''">
+                and train_number_code = #{trainNumberCode}
+            </if>
+            <if test="trainNumber != null and trainNumber != ''">
+                and train_number = #{trainNumber}
+            </if>
+            <if test="startStationCode != null and startStationCode != ''">
+                and start_station_code = #{startStationCode}
+            </if>
+            <if test="endStationCode != null and endStationCode != ''">
+                and end_station_code = #{endStationCode}
+            </if>
+            <if test="departStationCode != null and departStationCode != ''">
+                and depart_station_code = #{departStationCode}
+            </if>
+            <if test="arriveStationCode != null and arriveStationCode != ''">
+                and arrive_station_code = #{arriveStationCode}
+            </if>
+            <if test="departTime != null and departTime != ''">
+                and depart_time = #{departTime}
+            </if>
+            <if test="arriveTime != null and arriveTime != ''">
+                and arrive_time = #{arriveTime}
+            </if>
+            <if test="spendTime != null and spendTime != ''">
+                and spend_time = #{spendTime}
+            </if>
+            <if test="softSeatLeft != null">
+                and soft_seat_left = #{softSeatLeft}
+            </if>
+            <if test="noSeatLeft != null">
+                and no_seat_left = #{noSeatLeft}
+            </if>
+            <if test="hardBedLeft != null">
+                and hard_bed_left = #{hardBedLeft}
+            </if>
+            <if test="hardSeatLeft != null">
+                and hard_seat_left = #{hardSeatLeft}
+            </if>
+            <if test="secondSeatLeft != null">
+                and second_seat_left = #{secondSeatLeft}
+            </if>
+            <if test="firstSeatLeft != null">
+                and first_seat_left = #{firstSeatLeft}
+            </if>
+            <if test="businessSeatLeft != null">
+                and business_seat_left = #{businessSeatLeft}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="datachangeTime != null">
+                and datachange_time = #{datachangeTime}
+            </if>
+        </where>
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+    <select id="queryAll" resultMap="TicketInfoMap">
+        select
+        tid, train_number_code, train_number, start_station_code, end_station_code, depart_station_code, arrive_station_code, depart_time, arrive_time, spend_time, soft_seat_left, no_seat_left, hard_bed_left, hard_seat_left, second_seat_left, first_seat_left, business_seat_left, create_time, datachange_time
+        from ticket_info
+    </select>
+
+    <select id="queryAllByLimitNoCondition" resultMap="TicketInfoMap">
+        select
+        tid, train_number_code, train_number, start_station_code, end_station_code, depart_station_code, arrive_station_code, depart_time, arrive_time, spend_time, soft_seat_left, no_seat_left, hard_bed_left, hard_seat_left, second_seat_left, first_seat_left, business_seat_left, create_time, datachange_time
+        from ticket_info
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from ticket_info
+        <where>
+            <if test="tid != null">
+                and tid = #{tid}
+            </if>
+            <if test="trainNumberCode != null and trainNumberCode != ''">
+                and train_number_code = #{trainNumberCode}
+            </if>
+            <if test="trainNumber != null and trainNumber != ''">
+                and train_number = #{trainNumber}
+            </if>
+            <if test="startStationCode != null and startStationCode != ''">
+                and start_station_code = #{startStationCode}
+            </if>
+            <if test="endStationCode != null and endStationCode != ''">
+                and end_station_code = #{endStationCode}
+            </if>
+            <if test="departStationCode != null and departStationCode != ''">
+                and depart_station_code = #{departStationCode}
+            </if>
+            <if test="arriveStationCode != null and arriveStationCode != ''">
+                and arrive_station_code = #{arriveStationCode}
+            </if>
+            <if test="departTime != null and departTime != ''">
+                and depart_time = #{departTime}
+            </if>
+            <if test="arriveTime != null and arriveTime != ''">
+                and arrive_time = #{arriveTime}
+            </if>
+            <if test="spendTime != null and spendTime != ''">
+                and spend_time = #{spendTime}
+            </if>
+            <if test="softSeatLeft != null">
+                and soft_seat_left = #{softSeatLeft}
+            </if>
+            <if test="noSeatLeft != null">
+                and no_seat_left = #{noSeatLeft}
+            </if>
+            <if test="hardBedLeft != null">
+                and hard_bed_left = #{hardBedLeft}
+            </if>
+            <if test="hardSeatLeft != null">
+                and hard_seat_left = #{hardSeatLeft}
+            </if>
+            <if test="secondSeatLeft != null">
+                and second_seat_left = #{secondSeatLeft}
+            </if>
+            <if test="firstSeatLeft != null">
+                and first_seat_left = #{firstSeatLeft}
+            </if>
+            <if test="businessSeatLeft != null">
+                and business_seat_left = #{businessSeatLeft}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="datachangeTime != null">
+                and datachange_time = #{datachangeTime}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="tid" useGeneratedKeys="true">
+        insert into ticket_info(train_number_code, train_number, start_station_code, end_station_code, depart_station_code, arrive_station_code, depart_time, arrive_time, spend_time, soft_seat_left, no_seat_left, hard_bed_left, hard_seat_left, second_seat_left, first_seat_left, business_seat_left, create_time, datachange_time)
+        values (#{trainNumberCode}, #{trainNumber}, #{startStationCode}, #{endStationCode}, #{departStationCode}, #{arriveStationCode}, #{departTime}, #{arriveTime}, #{spendTime}, #{softSeatLeft}, #{noSeatLeft}, #{hardBedLeft}, #{hardSeatLeft}, #{secondSeatLeft}, #{firstSeatLeft}, #{businessSeatLeft}, #{createTime}, #{datachangeTime})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="tid" useGeneratedKeys="true">
+        insert into ticket_info(train_number_code, train_number, start_station_code, end_station_code, depart_station_code, arrive_station_code, depart_time, arrive_time, spend_time, soft_seat_left, no_seat_left, hard_bed_left, hard_seat_left, second_seat_left, first_seat_left, business_seat_left, create_time, datachange_time)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.trainNumberCode}, #{entity.trainNumber}, #{entity.startStationCode}, #{entity.endStationCode}, #{entity.departStationCode}, #{entity.arriveStationCode}, #{entity.departTime}, #{entity.arriveTime}, #{entity.spendTime}, #{entity.softSeatLeft}, #{entity.noSeatLeft}, #{entity.hardBedLeft}, #{entity.hardSeatLeft}, #{entity.secondSeatLeft}, #{entity.firstSeatLeft}, #{entity.businessSeatLeft}, #{entity.createTime}, #{entity.datachangeTime})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="tid" useGeneratedKeys="true">
+        insert into ticket_info(train_number_code, train_number, start_station_code, end_station_code, depart_station_code, arrive_station_code, depart_time, arrive_time, spend_time, soft_seat_left, no_seat_left, hard_bed_left, hard_seat_left, second_seat_left, first_seat_left, business_seat_left, create_time, datachange_time)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.trainNumberCode}, #{entity.trainNumber}, #{entity.startStationCode}, #{entity.endStationCode}, #{entity.departStationCode}, #{entity.arriveStationCode}, #{entity.departTime}, #{entity.arriveTime}, #{entity.spendTime}, #{entity.softSeatLeft}, #{entity.noSeatLeft}, #{entity.hardBedLeft}, #{entity.hardSeatLeft}, #{entity.secondSeatLeft}, #{entity.firstSeatLeft}, #{entity.businessSeatLeft}, #{entity.createTime}, #{entity.datachangeTime})
+        </foreach>
+        on duplicate key update
+        train_number_code = values(train_number_code),
+        train_number = values(train_number),
+        start_station_code = values(start_station_code),
+        end_station_code = values(end_station_code),
+        depart_station_code = values(depart_station_code),
+        arrive_station_code = values(arrive_station_code),
+        depart_time = values(depart_time),
+        arrive_time = values(arrive_time),
+        spend_time = values(spend_time),
+        soft_seat_left = values(soft_seat_left),
+        no_seat_left = values(no_seat_left),
+        hard_bed_left = values(hard_bed_left),
+        hard_seat_left = values(hard_seat_left),
+        second_seat_left = values(second_seat_left),
+        first_seat_left = values(first_seat_left),
+        business_seat_left = values(business_seat_left),
+        create_time = values(create_time),
+        datachange_time = values(datachange_time)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update ticket_info
+        <set>
+            <if test="trainNumberCode != null and trainNumberCode != ''">
+                train_number_code = #{trainNumberCode},
+            </if>
+            <if test="trainNumber != null and trainNumber != ''">
+                train_number = #{trainNumber},
+            </if>
+            <if test="startStationCode != null and startStationCode != ''">
+                start_station_code = #{startStationCode},
+            </if>
+            <if test="endStationCode != null and endStationCode != ''">
+                end_station_code = #{endStationCode},
+            </if>
+            <if test="departStationCode != null and departStationCode != ''">
+                depart_station_code = #{departStationCode},
+            </if>
+            <if test="arriveStationCode != null and arriveStationCode != ''">
+                arrive_station_code = #{arriveStationCode},
+            </if>
+            <if test="departTime != null and departTime != ''">
+                depart_time = #{departTime},
+            </if>
+            <if test="arriveTime != null and arriveTime != ''">
+                arrive_time = #{arriveTime},
+            </if>
+            <if test="spendTime != null and spendTime != ''">
+                spend_time = #{spendTime},
+            </if>
+            <if test="softSeatLeft != null">
+                soft_seat_left = #{softSeatLeft},
+            </if>
+            <if test="noSeatLeft != null">
+                no_seat_left = #{noSeatLeft},
+            </if>
+            <if test="hardBedLeft != null">
+                hard_bed_left = #{hardBedLeft},
+            </if>
+            <if test="hardSeatLeft != null">
+                hard_seat_left = #{hardSeatLeft},
+            </if>
+            <if test="secondSeatLeft != null">
+                second_seat_left = #{secondSeatLeft},
+            </if>
+            <if test="firstSeatLeft != null">
+                first_seat_left = #{firstSeatLeft},
+            </if>
+            <if test="businessSeatLeft != null">
+                business_seat_left = #{businessSeatLeft},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="datachangeTime != null">
+                datachange_time = #{datachangeTime},
+            </if>
+        </set>
+        where tid = #{tid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from ticket_info where tid = #{tid}
+    </delete>
+
+</mapper>
+

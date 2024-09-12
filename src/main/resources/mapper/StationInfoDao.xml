@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xlb.dao.StationInfoDao">
+
+    <resultMap type="com.xlb.entity.StationInfo" id="StationInfoMap">
+        <result property="tid" column="tid" jdbcType="INTEGER"/>
+        <result property="stationName" column="station_name" jdbcType="VARCHAR"/>
+        <result property="stationCode" column="station_code" jdbcType="VARCHAR"/>
+        <result property="stationSpell" column="station_spell" jdbcType="VARCHAR"/>
+        <result property="stationSzm" column="station_szm" jdbcType="VARCHAR"/>
+        <result property="stationCount" column="station_count" jdbcType="INTEGER"/>
+        <result property="cityId" column="city_id" jdbcType="VARCHAR"/>
+        <result property="cityName" column="city_name" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="datachangeTime" column="datachange_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="StationInfoMap">
+        select
+          tid, station_name, station_code, station_spell, station_szm, station_count, city_id, city_name, create_time, datachange_time
+        from station_info
+        where tid = #{tid}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="StationInfoMap">
+        select
+          tid, station_name, station_code, station_spell, station_szm, station_count, city_id, city_name, create_time, datachange_time
+        from station_info
+        <where>
+            <if test="tid != null">
+                and tid = #{tid}
+            </if>
+            <if test="stationName != null and stationName != ''">
+                and station_name = #{stationName}
+            </if>
+            <if test="stationCode != null and stationCode != ''">
+                and station_code = #{stationCode}
+            </if>
+            <if test="stationSpell != null and stationSpell != ''">
+                and station_spell = #{stationSpell}
+            </if>
+            <if test="stationSzm != null and stationSzm != ''">
+                and station_szm = #{stationSzm}
+            </if>
+            <if test="stationCount != null">
+                and station_count = #{stationCount}
+            </if>
+            <if test="cityId != null and cityId != ''">
+                and city_id = #{cityId}
+            </if>
+            <if test="cityName != null and cityName != ''">
+                and city_name = #{cityName}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="datachangeTime != null">
+                and datachange_time = #{datachangeTime}
+            </if>
+        </where>
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from station_info
+        <where>
+            <if test="tid != null">
+                and tid = #{tid}
+            </if>
+            <if test="stationName != null and stationName != ''">
+                and station_name = #{stationName}
+            </if>
+            <if test="stationCode != null and stationCode != ''">
+                and station_code = #{stationCode}
+            </if>
+            <if test="stationSpell != null and stationSpell != ''">
+                and station_spell = #{stationSpell}
+            </if>
+            <if test="stationSzm != null and stationSzm != ''">
+                and station_szm = #{stationSzm}
+            </if>
+            <if test="stationCount != null">
+                and station_count = #{stationCount}
+            </if>
+            <if test="cityId != null and cityId != ''">
+                and city_id = #{cityId}
+            </if>
+            <if test="cityName != null and cityName != ''">
+                and city_name = #{cityName}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="datachangeTime != null">
+                and datachange_time = #{datachangeTime}
+            </if>
+        </where>
+    </select>
+
+    <!--根据车站名查询车站信息-->
+    <select id="queryByStationName"  resultMap="StationInfoMap">
+        select tid, station_name, station_code, station_spell, station_szm, station_count, city_id, city_name, create_time, datachange_time
+        from station_info
+        where station_name = #{stationName}
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="tid" useGeneratedKeys="true">
+        insert into station_info(station_name, station_code, station_spell, station_szm, station_count, city_id, city_name, create_time, datachange_time)
+        values (#{stationName}, #{stationCode}, #{stationSpell}, #{stationSzm}, #{stationCount}, #{cityId}, #{cityName}, #{createTime}, #{datachangeTime})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="tid" useGeneratedKeys="true">
+        insert into station_info(station_name, station_code, station_spell, station_szm, station_count, city_id, city_name, create_time, datachange_time)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.stationName}, #{entity.stationCode}, #{entity.stationSpell}, #{entity.stationSzm}, #{entity.stationCount}, #{entity.cityId}, #{entity.cityName}, #{entity.createTime}, #{entity.datachangeTime})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="tid" useGeneratedKeys="true">
+        insert into station_info(station_name, station_code, station_spell, station_szm, station_count, city_id, city_name, create_time, datachange_time)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.stationName}, #{entity.stationCode}, #{entity.stationSpell}, #{entity.stationSzm}, #{entity.stationCount}, #{entity.cityId}, #{entity.cityName}, #{entity.createTime}, #{entity.datachangeTime})
+        </foreach>
+        on duplicate key update
+        station_name = values(station_name),
+        station_code = values(station_code),
+        station_spell = values(station_spell),
+        station_szm = values(station_szm),
+        station_count = values(station_count),
+        city_id = values(city_id),
+        city_name = values(city_name),
+        create_time = values(create_time),
+        datachange_time = values(datachange_time)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update station_info
+        <set>
+            <if test="stationName != null and stationName != ''">
+                station_name = #{stationName},
+            </if>
+            <if test="stationCode != null and stationCode != ''">
+                station_code = #{stationCode},
+            </if>
+            <if test="stationSpell != null and stationSpell != ''">
+                station_spell = #{stationSpell},
+            </if>
+            <if test="stationSzm != null and stationSzm != ''">
+                station_szm = #{stationSzm},
+            </if>
+            <if test="stationCount != null">
+                station_count = #{stationCount},
+            </if>
+            <if test="cityId != null and cityId != ''">
+                city_id = #{cityId},
+            </if>
+            <if test="cityName != null and cityName != ''">
+                city_name = #{cityName},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="datachangeTime != null">
+                datachange_time = #{datachangeTime},
+            </if>
+        </set>
+        where tid = #{tid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from station_info where tid = #{tid}
+    </delete>
+
+</mapper>
+
