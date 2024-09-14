@@ -14,6 +14,7 @@ import com.xlb.entity.*;
 import com.xlb.util.GetNetUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,7 +39,8 @@ public class GainStationListController {
     /**
      * 批量插入100条，后续可以改成配置
      */
-    private final Integer INSERT_COUNT = 100;
+    @Value("${insert.count}")
+    private Integer INSERT_COUNT;
 
     @GetMapping("/insert")
     public String select(String departDate, String departStation, String arriveStation) {
